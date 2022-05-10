@@ -23,6 +23,10 @@ app.use(bodyParser.json());
 
 const dbo = require("./db/conn");
 
+// Routes
+const productRouter = require('./routes/product/product.route');
+app.use('/products', productRouter);
+
 app.listen(PORT, () => {
   dbo.connectDb((err) => {
     if (err) console.error(err);

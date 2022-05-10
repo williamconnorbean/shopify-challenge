@@ -17,7 +17,7 @@ const productSchema = new Schema(
     },
     costPrice: {
       type: Number,
-      required: false
+      required: true
     },
     stock: {
       type: Number,
