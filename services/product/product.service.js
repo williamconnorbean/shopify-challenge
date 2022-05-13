@@ -34,7 +34,7 @@ const create = (req, res) => {
 
 const read = (req, res) => {
   // TODO: look into adding pagination
-  Product.find()
+  Product.find({ isDeleted: { $ne: true } } )
     .then((products) => {
       return res.status(200).json({
         products
