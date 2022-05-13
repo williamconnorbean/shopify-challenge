@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import { getProducts } from '../../actions/product/getProducts';
 import { updateProduct } from '../../actions/product/updateProduct';
 import { deleteProduct } from '../../actions/product/deleteProduct';
-import usePrevious from '../hooks/usePrevious';
+import usePrevious from '../../hooks/usePrevious';
 
 const Product = (props) => {
   const {
