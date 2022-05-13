@@ -29,7 +29,7 @@ const updateProduct = (
   dispatch(updateProductBegin());
 
   return axios
-    .post(`/products/update/${id}`, {
+    .post(`/api/products/update/${id}`, {
       name,
       description,
       salePrice,

@@ -127,14 +127,22 @@ const Product = (props) => {
       </CardContent>
       <CardActions>
         {isEdit ? (
-          <Button
-            size="small"
-            variant="contained"
-            onClick={() => handleSave()}
-            disabled={updateLoading}
-          >
-            Save
-          </Button>
+          <>
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => handleSave()}
+              disabled={updateLoading}
+            >
+              Save
+            </Button>
+            <Button
+              size="small"
+              onClick={() => setIsEdit(false)}
+            >
+              Cancel
+            </Button>
+          </>
         ) : (
           <>
             <Button

@@ -22,7 +22,7 @@ const getProducts = () => (dispatch) => {
   dispatch(getProductsBegin());
 
   return axios
-    .get('/products')
+    .get('/api/products')
     .then((response) => dispatch(getProductsSuccess(response.data)))
     .catch((error) => dispatch(getProductsError(error.response)));
 };

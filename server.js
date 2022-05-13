@@ -25,7 +25,7 @@ const dbo = require("./db/conn");
 
 // Routes
 const productRouter = require('./routes/product/product.route');
-app.use('/products', productRouter);
+app.use('/api/products', productRouter);
 
 app.listen(PORT, () => {
   dbo.connectDb((err) => {
