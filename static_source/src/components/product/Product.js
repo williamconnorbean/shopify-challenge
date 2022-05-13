@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { getProducts } from '../../actions/product/getProducts';
 import { updateProduct } from '../../actions/product/updateProduct';
+import { deleteProduct } from '../../actions/product/deleteProduct';
 import usePrevious from '../hooks/usePrevious';
 
 const Product = (props) => {
@@ -19,7 +20,9 @@ const Product = (props) => {
     costPrice,
     stock,
     updateLoading,
-    updateError
+    updateError,
+    deleteLoading,
+    deleteError
   } = props;
 
   const [isEdit, setIsEdit] = useState(false);
@@ -30,6 +33,7 @@ const Product = (props) => {
   const [newStock, setNewStock] = useState(stock);
 
   const prevUpdateLoading = usePrevious(updateLoading);
+  const prevDeleteLoading = usePrevious(deleteLoading);
 
   useEffect(() => {
     if (prevUpdateLoading && !updateLoading && updateError == null) {
@@ -38,6 +42,14 @@ const Product = (props) => {
     }
     // eslint-disable-next-line
   }, [updateLoading])
+
+  useEffect(() => {
+    if (prevDeleteLoading && !deleteLoading && deleteError == null) {
+      props.dispatch(getProducts());
+      setIsEdit(false);
+    }
+    // eslint-disable-next-line
+  }, [deleteLoading])
 
   const handleSave = () => {
     props.dispatch(updateProduct(
@@ -48,6 +60,10 @@ const Product = (props) => {
       newCostPrice,
       newStock
     ));
+  };
+
+  const handleDelete = () => {
+    props.dispatch(deleteProduct(id));
   };
 
   return (
@@ -127,7 +143,13 @@ const Product = (props) => {
             >
               Edit
             </Button>
-            <Button size="small" color="error">Delete</Button>
+            <Button
+              size="small"
+              color="error"
+              onClick={() => handleDelete()}
+            >
+              Delete
+            </Button>
           </>
         )}
       </CardActions>
@@ -138,7 +160,9 @@ const Product = (props) => {
 const mapStateToProps = (state) => ({
   // from redux
   updateLoading: state.product.updateProduct.loading,
-  updateError: state.product.updateProduct.error
+  updateError: state.product.updateProduct.error,
+  deleteLoading: state.product.deleteProduct.loading,
+  deleteError: state.product.deleteProduct.error
 });
 
 export default connect(mapStateToProps)(Product);
