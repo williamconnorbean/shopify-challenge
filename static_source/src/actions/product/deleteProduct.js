@@ -22,7 +22,7 @@ const deleteProduct = (id) => (dispatch) => {
   dispatch(deleteProductBegin());
 
   return axios
-    .delete(`/products/${id}`)
+    .delete(`/api/products/${id}`)
     .then((response) => dispatch(deleteProductSuccess(response.data)))
     .catch((error) => dispatch(deleteProductError(error.response)));
 };
