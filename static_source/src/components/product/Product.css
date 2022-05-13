@@ -1,6 +1,7 @@
 .product__container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .product__item-wrapper {
