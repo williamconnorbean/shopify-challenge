@@ -37,7 +37,7 @@ const read = (req, res) => {
   Product.find()
     .then((products) => {
       return res.status(200).json({
-        products: products
+        products
       });
     })
     .catch((error) => {
