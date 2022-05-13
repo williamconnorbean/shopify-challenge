@@ -1,4 +1,5 @@
 const Product = require('../../models/product.model');
+const { Comment, COMMENT_TYPES } = require('../../models/comment.model');
 
 const create = (req, res) => {
   const {
@@ -34,7 +35,12 @@ const create = (req, res) => {
 
 const read = (req, res) => {
   // TODO: look into adding pagination
-  Product.find({ isDeleted: { $ne: true } } )
+  Product
+    .find({ isDeleted: { $ne: true } } )
+    .populate({
+      path: 'comments',
+      model: 'comment'
+    })
     .then((products) => {
       return res.status(200).json({
         products
@@ -103,9 +109,49 @@ const remove = (req, res) => {
     });
 };
 
+const createComment = (req, res) => {
+  const { id } = req.params;
+  const { commentText } = req.body;
+
+  Product.findById(id)
+    .then((product) => {
+      const newComment = new Comment({
+        productId: id,
+        type: COMMENT_TYPES.DELETE,
+        comment: commentText
+      });
+
+      newComment.save()
+        .then((comment) => {
+          product.updateOne(
+            { $push: { comments: comment } },
+            (error) => {
+              if (error) {
+                res.status(400).json({
+                  message: 'Failed to link comment to product',
+                  error
+                });
+              } else {
+                res.status(201).end();
+              }
+            }
+          );
+        })
+        .catch((error) => res.status(400).json({
+          message: 'Failed to create comment',
+          error
+        }));
+    })
+    .catch((error) => res.status(400).json({
+      message: 'Failed to find product',
+      error
+    }));
+};
+
 module.exports = {
   create,
   read,
   update,
-  remove
+  remove,
+  createComment
 };

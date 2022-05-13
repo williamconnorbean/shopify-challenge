@@ -13,4 +13,7 @@ router.post('/update/:id', productService.update);
 // Delete
 router.delete('/:id', productService.remove);
 
+// Create comment
+router.post('/:id/comment', productService.createComment);
+
 module.exports = router;

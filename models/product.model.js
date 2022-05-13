@@ -23,6 +23,10 @@ const productSchema = new Schema(
       type: Number,
       default: 0
     },
+    comments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'comment'
+    }],
     isDeleted: {
       type: Boolean,
       required: true,
