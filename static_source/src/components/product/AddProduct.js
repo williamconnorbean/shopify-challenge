@@ -108,8 +108,8 @@ const AddProduct = (props) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleCreate()} variant="contained">Add</Button>
+          <Button onClick={handleClose} disabled={loading}>Cancel</Button>
+          <Button onClick={() => handleCreate()} variant="contained" disabled={loading}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>
