@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getProducts } from '../../actions/product/getProducts';
 import { deleteProduct } from '../../actions/product/deleteProduct';
 import usePrevious from '../../hooks/usePrevious';
 import Product from './Product';
 import './Product.css';
+import DeletionAlert from '../alerts/DeletionAlert';
 
 const ProductList = (props) => {
   const {
@@ -14,9 +15,12 @@ const ProductList = (props) => {
     commentProduct,
     commentLoading,
     commentError,
+    productDeleted,
     deleteLoading,
     deleteError
   } = props;
+
+  const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
 
   const prevUpdateLoading = usePrevious(updateLoading);
   const prevCommentLoading = usePrevious(commentLoading);
@@ -33,11 +37,19 @@ const ProductList = (props) => {
   }, []);
 
   useEffect(() => {
-    if (isUpdateSuccessful() || isDeleteSuccessful()) {
+    if (isUpdateSuccessful()) {
       props.dispatch(getProducts());
     }
     // eslint-disable-next-line
-  }, [isUpdateSuccessful, isDeleteSuccessful]);
+  }, [isUpdateSuccessful]);
+
+  useEffect(() => {
+    if (isDeleteSuccessful()) {
+      props.dispatch(getProducts());
+      setDeleteAlertOpen(true);
+    }
+    // eslint-disable-next-line
+  }, [isDeleteSuccessful]);
 
   useEffect(() => {
     if (isCommentSuccessfull()) {
@@ -64,6 +76,10 @@ const ProductList = (props) => {
   return (
     <div className='product__container'>
       {productCards}
+      <DeletionAlert
+        productId={productDeleted._id}
+        isOpen={deleteAlertOpen}
+        setIsOpen={setDeleteAlertOpen} />
     </div>
   );
 };
@@ -76,6 +92,7 @@ const mapStateToProps = (state) => ({
   commentProduct: state.comment.createDeletionComment.product,
   commentLoading: state.comment.createDeletionComment.loading,
   commentError: state.comment.createDeletionComment.error,
+  productDeleted: state.product.deleteProduct.product,
   deleteLoading: state.product.deleteProduct.loading,
   deleteError: state.product.deleteProduct.error
 });

@@ -40,6 +40,17 @@ const updateProduct = (
     .catch((error) => dispatch(updateProductError(error.response)));
 };
 
+const undoProductDeletion = (id) => (dispatch) => {
+  dispatch(updateProductBegin());
+
+  return axios
+    .post(`/api/products/update/${id}`, {
+      isDeleted: false
+    })
+    .then((response) => dispatch(updateProductSuccess(response.data)))
+    .catch((error) => dispatch(updateProductError(error.response)));
+};
+
 export {
   UPDATE_PRODUCT_BEGIN,
   UPDATE_PRODUCT_SUCCESS,
@@ -47,5 +58,6 @@ export {
   updateProductBegin,
   updateProductSuccess,
   updateProductError,
-  updateProduct
+  updateProduct,
+  undoProductDeletion
 };
