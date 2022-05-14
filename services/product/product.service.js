@@ -132,7 +132,10 @@ const createComment = (req, res) => {
                   error
                 });
               } else {
-                res.status(201).end();
+                res.status(200).json({
+                  message: 'Comment created successfully',
+                  product
+                });
               }
             }
           );
