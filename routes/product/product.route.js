@@ -8,7 +8,7 @@ router.post('/', productService.create);
 router.get('/', productService.read);
 
 // Update
-router.post('/update/:id', productService.update);
+router.put('/update/:id', productService.update);
 
 // Delete
 router.delete('/:id', productService.remove);
