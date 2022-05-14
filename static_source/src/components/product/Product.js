@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -6,10 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { getProducts } from '../../actions/product/getProducts';
 import { updateProduct } from '../../actions/product/updateProduct';
-import { deleteProduct } from '../../actions/product/deleteProduct';
-import usePrevious from '../../hooks/usePrevious';
+import DeletionComment from '../comment/DeletionComment';
 
 const Product = (props) => {
   const {
@@ -19,10 +17,7 @@ const Product = (props) => {
     salePrice,
     costPrice,
     stock,
-    updateLoading,
-    updateError,
-    deleteLoading,
-    deleteError
+    updateLoading
   } = props;
 
   const [isEdit, setIsEdit] = useState(false);
@@ -32,27 +27,8 @@ const Product = (props) => {
   const [newCostPrice, setNewCostPrice] = useState(costPrice);
   const [newStock, setNewStock] = useState(stock);
 
-  const prevUpdateLoading = usePrevious(updateLoading);
-  const prevDeleteLoading = usePrevious(deleteLoading);
-
-  useEffect(() => {
-    if (prevUpdateLoading && !updateLoading && updateError == null) {
-      props.dispatch(getProducts());
-      setIsEdit(false);
-    }
-    // eslint-disable-next-line
-  }, [updateLoading])
-
-  useEffect(() => {
-    if (prevDeleteLoading && !deleteLoading && deleteError == null) {
-      props.dispatch(getProducts());
-      setIsEdit(false);
-    }
-    // eslint-disable-next-line
-  }, [deleteLoading])
-
-  const handleSave = () => {
-    props.dispatch(updateProduct(
+  const handleSave = async () => {
+    await props.dispatch(updateProduct(
       id,
       newName,
       newDescription,
@@ -60,10 +36,8 @@ const Product = (props) => {
       newCostPrice,
       newStock
     ));
-  };
 
-  const handleDelete = () => {
-    props.dispatch(deleteProduct(id));
+    setIsEdit(false);
   };
 
   return (
@@ -139,6 +113,7 @@ const Product = (props) => {
             <Button
               size="small"
               onClick={() => setIsEdit(false)}
+              disabled={updateLoading}
             >
               Cancel
             </Button>
@@ -151,13 +126,7 @@ const Product = (props) => {
             >
               Edit
             </Button>
-            <Button
-              size="small"
-              color="error"
-              onClick={() => handleDelete()}
-            >
-              Delete
-            </Button>
+            <DeletionComment productId={id} />
           </>
         )}
       </CardActions>
@@ -167,10 +136,7 @@ const Product = (props) => {
 
 const mapStateToProps = (state) => ({
   // from redux
-  updateLoading: state.product.updateProduct.loading,
-  updateError: state.product.updateProduct.error,
-  deleteLoading: state.product.deleteProduct.loading,
-  deleteError: state.product.deleteProduct.error
+  updateLoading: state.product.updateProduct.loading
 });
 
 export default connect(mapStateToProps)(Product);
