@@ -29,7 +29,7 @@ const updateProduct = (
   dispatch(updateProductBegin());
 
   return axios
-    .post(`/api/products/update/${id}`, {
+    .put(`/api/products/update/${id}`, {
       name,
       description,
       salePrice,
@@ -44,7 +44,7 @@ const undoProductDeletion = (id) => (dispatch) => {
   dispatch(updateProductBegin());
 
   return axios
-    .post(`/api/products/update/${id}`, {
+    .put(`/api/products/update/${id}`, {
       isDeleted: false
     })
     .then((response) => dispatch(updateProductSuccess(response.data)))
