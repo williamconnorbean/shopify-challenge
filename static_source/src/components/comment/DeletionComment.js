@@ -27,11 +27,13 @@ const DeletionComment = (props) => {
     setOpen(false);
   };
 
-  const handleCreateComment = () => {
-    props.dispatch(createDeletionComment(
+  const handleCreateComment = async () => {
+    await props.dispatch(createDeletionComment(
       productId,
       comment
     ));
+
+    handleClose();
   };
 
   return (

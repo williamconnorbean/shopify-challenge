@@ -20,13 +20,13 @@ const create = (req, res) => {
 
   newProduct.save()
     .then((product) => {
-      return res.status(201).json({
+      res.status(201).json({
         message: 'Product created successfully',
         product
       });
     })
     .catch((error) => {
-      return res.status(400).json({
+      res.status(400).json({
         message: 'Failed to create product',
         error
       });
@@ -42,12 +42,12 @@ const read = (req, res) => {
       model: 'comment'
     })
     .then((products) => {
-      return res.status(200).json({
+      res.status(200).json({
         products
       });
     })
     .catch((error) => {
-      return res.status(400).json({
+      res.status(400).json({
         message: 'Failed to find products',
         error
       });
@@ -60,34 +60,30 @@ const update = (req, res) => {
     description,
     salePrice,
     costPrice,
-    stock
+    stock,
+    isDeleted
   } = req.body;
 
-  Product.findById(req.params.id)
+  Product.findByIdAndUpdate(
+    req.params.id,
+    {
+      name,
+      description,
+      salePrice,
+      costPrice,
+      stock,
+      isDeleted
+    },
+    { new: true })
     .then((product) => {
-      if (name) product.name = name;
-      if (description) product.description = description;
-      if (salePrice) product.salePrice = salePrice;
-      if (costPrice) product.costPrice = costPrice;
-      if (stock) product.stock = stock;
-
-      product.save()
-        .then((product) => {
-          return res.status(200).json({
-            message: 'Updated product successfully',
-            product
-          });
-        })
-        .catch((error) => {
-          return res.status(400).json({
-            message: 'Failed to update product details',
-            error
-          });
-        });
+      res.status(200).json({
+        message: 'Product deleted successfully',
+        product
+      });
     })
     .catch((error) => {
-      return res.status(400).json({
-        message: 'Failed to update product details',
+      res.status(400).json({
+        message: 'Failed to delete product',
         error
       });
     });
@@ -96,13 +92,13 @@ const update = (req, res) => {
 const remove = (req, res) => {
   Product.findByIdAndUpdate(req.params.id, { isDeleted: true }, { new: true })
     .then((product) => {
-      return res.status(200).json({
+      res.status(200).json({
         message: 'Product deleted successfully',
         product
       });
     })
     .catch((error) => {
-      return res.status(400).json({
+      res.status(400).json({
         message: 'Failed to delete product',
         error
       });
