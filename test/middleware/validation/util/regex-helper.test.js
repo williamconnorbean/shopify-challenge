@@ -1,4 +1,4 @@
-const regexHelper = require('../../../middleware/validation/util/regex-helper');
+const regexHelper = require('../../../../middleware/validation/util/regex-helper');
 
 describe('isValidInputText test suite', () => {
   test('verifies a string is at least length 1 by default', () => {
