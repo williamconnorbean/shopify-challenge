@@ -20,6 +20,10 @@ const Product = (props) => {
     updateLoading
   } = props;
 
+  const inputProps = {
+    min: 0
+  };
+
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState(name);
   const [newDescription, setNewDescription] = useState(description);
@@ -63,6 +67,7 @@ const Product = (props) => {
               type='number'
               variant='standard'
               label="Sale price"
+              inputProps={inputProps}
               defaultValue={salePrice}
               onChange={e => setNewSalePrice(e.target.value)}
             />
@@ -70,6 +75,7 @@ const Product = (props) => {
               type='number'
               variant='standard'
               label="Cost price"
+              inputProps={inputProps}
               defaultValue={costPrice}
               onChange={e => setNewCostPrice(e.target.value)}
             />
@@ -77,6 +83,7 @@ const Product = (props) => {
               type='number'
               variant='standard'
               label="Units of stock"
+              inputProps={inputProps}
               defaultValue={stock}
               onChange={e => setNewStock(e.target.value)}
             />
