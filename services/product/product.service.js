@@ -34,7 +34,9 @@ const create = (req, res) => {
 };
 
 const read = (req, res) => {
-  // TODO: look into adding pagination
+  // TODO: In a future state I would look to add pagination to this service
+  // and support some kind of frontend pagination as well to prevent performance issues
+  // with large product inventories
   Product
     .find({ isDeleted: { $ne: true } } )
     .populate({
