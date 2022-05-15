@@ -22,12 +22,12 @@ const validateProductBody = () => {
       errors.push({ field: 'name', message: `name must be between ${MIN_LENGTH} and ${MAX_NAME_LENGTH} characters`});
     if (description && !isValidInputText(description, MIN_LENGTH, MAX_DESCRIPTION_LENGTH))
       errors.push({ field: 'description', message: `description must be between ${MIN_LENGTH} and ${MAX_DESCRIPTION_LENGTH} characters`});
-    if (salePrice && isNaN(salePrice))
-      errors.push({ field: 'salePrice', message: `salePrice must be a number`});
-    if (costPrice && isNaN(costPrice))
-      errors.push({ field: 'costPrice', message: `costPrice must be a number`});
-    if (stock && isNaN(stock))
-      errors.push({ field: 'stock', message: `stock must be a number`});
+    if (salePrice && (isNaN(salePrice) || salePrice <= 0))
+      errors.push({ field: 'salePrice', message: `salePrice must be a number greater than 0`});
+    if (costPrice && (isNaN(costPrice) || costPrice <= 0))
+      errors.push({ field: 'costPrice', message: `costPrice must be a number greater than 0`});
+    if (stock && (isNaN(stock) || stock < 0))
+      errors.push({ field: 'stock', message: `stock must be a number greater than or equal to 0`});
     if (isDeleted && typeof isDeleted != 'boolean')
       errors.push({ field: 'isDeleted', message: `isDeleted must be a boolean`});
 

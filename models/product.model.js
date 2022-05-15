@@ -13,14 +13,17 @@ const productSchema = new Schema(
     },
     salePrice: {
       type: Number,
+      min: [0, 'Must be greater than or equal to 0'],
       required: true
     },
     costPrice: {
       type: Number,
+      min: [0, 'Must be greater than or equal to 0'],
       required: true
     },
     stock: {
       type: Number,
+      min: [0, 'Must be greater than or equal to 0'],
       default: 0
     },
     comments: [{

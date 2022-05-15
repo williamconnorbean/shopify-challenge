@@ -17,6 +17,10 @@ const AddProduct = (props) => {
     error
   } = props;
 
+  const inputProps = {
+    min: 0
+  };
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -88,6 +92,7 @@ const AddProduct = (props) => {
             variant='standard'
             label="Sale price"
             fullWidth
+            inputProps={inputProps}
             onChange={e => setSalePrice(e.target.value)}
           />
           <TextField
@@ -96,6 +101,7 @@ const AddProduct = (props) => {
             variant='standard'
             label="Cost price"
             fullWidth
+            inputProps={inputProps}
             onChange={e => setCostPrice(e.target.value)}
           />
           <TextField
@@ -104,6 +110,7 @@ const AddProduct = (props) => {
             variant='standard'
             label="Units of stock"
             fullWidth
+            inputProps={inputProps}
             onChange={e => setStock(e.target.value)}
           />
         </DialogContent>
