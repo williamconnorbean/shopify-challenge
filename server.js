@@ -27,6 +27,13 @@ const dbo = require("./db/conn");
 const productRouter = require('./routes/product/product.route');
 app.use('/api/products', productRouter);
 
+// Error handling
+app.use((err, req, res, next) => {
+  res.status(err.statusCode).json({
+    errors: err.errors
+  });
+});
+
 app.listen(PORT, () => {
   dbo.connectDb((err) => {
     if (err) console.error(err);
