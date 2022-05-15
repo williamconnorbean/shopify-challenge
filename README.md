@@ -1,7 +1,7 @@
 <h1 align="center">Shopify Backend Challenge</h1>
 
-## <h2 align="center">[Live Demo on Replit](https://shopify-challenge.connorbean.repl.co/)</h2>
-## <h2 align="center">[Live Demo on Heroku](https://connor-bean-shopify-challenge.herokuapp.com/)</h2>
+### <h2 align="center">[Live Demo on Replit](https://shopify-challenge.connorbean.repl.co/)</h2>
+### <h2 align="center">[Live Demo on Heroku](https://connor-bean-shopify-challenge.herokuapp.com/)</h2>
 
 ## Purpose
 This project is intended to act as an inventory tracking web application for a logistics company. It includes features to create/edit/view/delete inventory products, as well as the ability to add product deletion comments and to undo accidental deletions.
@@ -55,6 +55,13 @@ $ cd ./static_source/
 $ npm run start
 ```
 3. In your browser, navigate to `http://localhost:3000/`
+
+## Testing
+This project utilizes the testing framework [Jest](https://jestjs.io/) to help ensure code quality and accuracy.
+
+To run the test suite, perform the following:
+1. At the root of the project, run `npm install` if you haven't already done so as part of the above setup.
+2. Run `npm run test`
 
 ## More Resources
 1. [NPM Docs](https://docs.npmjs.com/cli/v8/commands/npm)
